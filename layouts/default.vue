@@ -116,6 +116,11 @@ export default {
           icon: 'mdi-chart-bubble',
           title: 'おみくじ',
           to: '/omikuji'
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'axiosでAPIを拾おう',
+          to: '/axios'
         }
       ],
       miniVariant: false,

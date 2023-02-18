@@ -1,4 +1,4 @@
-<!-- pages/todo/index.vue -->
+<!-- pages/omikuji/index.vue -->
 <template>
   <v-app>
     <v-main mt-0 pt-0>
