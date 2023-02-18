@@ -7,7 +7,7 @@
       </v-card>
       <v-card>
         <v-card-title class="headline">
-          <a href="./todo/">todoアプリはここをクリック</a><br />
+          左メニューから画面遷移<br /><br />
           TAKANO Hello World !! Welcome to the Vuetify + Nuxt.js template
         </v-card-title>
         <v-card-text>

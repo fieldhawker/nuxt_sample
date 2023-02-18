@@ -111,6 +111,11 @@ export default {
           icon: 'mdi-chart-bubble',
           title: 'Todoアプリ',
           to: '/todo'
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'おみくじ',
+          to: '/omikuji'
         }
       ],
       miniVariant: false,
