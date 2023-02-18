@@ -7,8 +7,8 @@
         <v-row>
           <v-col>
             <v-text-field
-              name="addName"
               v-model="content"
+              name="addName"
               label="タスクを入力してください"
               solo
             ></v-text-field>
@@ -23,28 +23,28 @@
           <v-btn
             outlline
             class="green"
-            v-bind:class="{ 'is-active': !find_flg }"
+            :v-bind:class="{ 'is-active': !find_flg }"
             @click="flag_reset"
             >全て</v-btn
           >
           <v-btn
             outlline
             class="green"
-            v-bind:class="{ 'is-active': find_flg && find_state == '作業前' }"
+            :v-bind:class="{ 'is-active': find_flg && find_state == '作業前' }"
             @click="find('作業前')"
             >作業前</v-btn
           >
           <v-btn
             outlline
             class="green"
-            v-bind:class="{ 'is-active': find_flg && find_state == '作業中' }"
+            :v-bind:class="{ 'is-active': find_flg && find_state == '作業中' }"
             @click="find('作業中')"
             >作業中</v-btn
           >
           <v-btn
             outlline
             class="green"
-            v-bind:class="{ 'is-active': find_flg && find_state == '完了' }"
+            :v-bind:class="{ 'is-active': find_flg && find_state == '完了' }"
             @click="find('完了')"
             >完了</v-btn
           >
@@ -52,7 +52,7 @@
       </v-container>
       <v-container>
         <v-simple-table fixed-header height="500px">
-          <template v-slot:default>
+          <template #default>
             <thead>
               <tr>
                 <th>タスク</th>
@@ -70,7 +70,7 @@
                     outlline
                     round
                     class="gray"
-                    v-bind:class="{
+                    :v-bind:class="{
                       'button--yet': item.state == '作業前',
                       'button--progress': item.state == '作業中',
                       'button--done': item.state == '完了',
@@ -109,10 +109,10 @@ export default {
     ...mapState(['todos']),
     display_todos: function () {
       if (this.find_flg) {
-        let arr = []
-        let data = this.todos
+        const arr = []
+        const data = this.todos
         data.forEach((element) => {
-          if (element.state == this.find_state) {
+          if (element.state === this.find_state) {
             arr.push(element)
           }
         })
@@ -124,7 +124,7 @@ export default {
   },
   methods: {
     insert: function () {
-      if (this.content != '') {
+      if (this.content !== '') {
         this.$store.commit('insert', { content: this.content })
         this.content = ''
       }

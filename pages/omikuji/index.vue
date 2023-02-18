@@ -1,7 +1,7 @@
 <!-- pages/todo/index.vue -->
 <template>
   <v-app>
-    <v-content mt-0 pt-0>
+    <v-main mt-0 pt-0>
       <v-card-title class="font-weight-bold">おみくじ</v-card-title>
       <v-container>
         <v-alert dense type="info">
@@ -20,12 +20,12 @@
           <span class="text-h5">{{ message }}</span>
         </v-card>
       </v-container>
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+
 
 export default {
   data: function () {
@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     omikujiChange: function () {
-      let num = Math.floor(Math.random() * this.omikujiArray.length)
+      const num = Math.floor(Math.random() * this.omikujiArray.length)
       this.fortune = this.omikujiArray[num]
       this.message = this.omikujiMessage[num]
     },
