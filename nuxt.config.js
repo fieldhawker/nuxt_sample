@@ -2,9 +2,9 @@ import colors from 'vuetify/es5/util/colors'
 
 export default {
   
-  router: {
-    mode: 'hash' // 追記
-  },
+  // router: {
+  //   mode: 'hash' // 追記
+  // },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: '%s - nuxt_sample',
@@ -41,19 +41,22 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
+    '@nuxtjs/proxy',
     '@nuxtjs/axios',
   ],
 
+  //proxyはaxiosの前に置かないとダメっぽい
+  proxy: {
+    '/api': {
+      target: 'https://opendata.corona.go.jp',
+      pathRewrite: {'^/api': ''}
+    },
+  },
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
+    prefix: '/api',
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     proxy: true,
-  },
-  proxy: {
-    '/api/': {
-      target: 'https://opendata.corona.go.jp',
-      pathRewrite: {'^/api/': ''}
-    },
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
