@@ -126,7 +126,12 @@ export default {
           icon: 'mdi-chart-bubble',
           title: 'LocalStorageを試す',
           to: '/localstorage'
-        }
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'Todoアプリ(LocalStorage対応版)',
+          to: '/todo2'
+        },
       ],
       miniVariant: false,
       right: true,
