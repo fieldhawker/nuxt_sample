@@ -21,18 +21,20 @@
 
 <script>
 export default {
+  filters: {
+    numberFormat: (text) => {
+      return Number(text).toLocaleString()
+    },
+  },
   async asyncData(context) {
     const hiduke = new Date()
+    hiduke.setDate(hiduke.getDate() - 2) // 昨日分がAPIに反映されるまで空になるので一昨日
     const year = hiduke.getFullYear()
     const month = ('0' + (hiduke.getMonth() + 1)).slice(-2)
-    const day = ('0' + (hiduke.getDate() - 1)).slice(-2) // 昨日
-    const url =
-      '/api/Covid19JapanAll?date=' +
-      year +
-      month +
-      day   // https://opendata.corona.go.jp/
-    
+    const day = ('0' + hiduke.getDate()).slice(-2)
+    const url = '/api/Covid19JapanAll?date=' + year + month + day // https://opendata.corona.go.jp/
     console.log(url)
+    
     const corona = await context.$axios.$get(
       // "https://jsonplaceholder.typicode.com/posts",
       url,
@@ -42,12 +44,6 @@ export default {
     )
     console.log(corona)
     return { itemList: corona.itemList, year, month, day }
-  },
-
-  filters: {
-    numberFormat: (text) => {
-      return Number(text).toLocaleString()
-    },
   },
   data() {
     return {
