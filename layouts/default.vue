@@ -121,6 +121,11 @@ export default {
           icon: 'mdi-chart-bubble',
           title: 'axiosでAPIを拾おう',
           to: '/axios'
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'LocalStorageを試す',
+          to: '/localstorage'
         }
       ],
       miniVariant: false,
