@@ -1,7 +1,7 @@
 <!-- pages/todo/index.vue -->
 <template>
   <v-app>
-    <v-content mt-0 pt-0>
+    <v-main mt-0 pt-0>
       <v-card-title class="font-weight-bold">Todoリスト</v-card-title>
       <v-container>
         <v-row>
@@ -89,7 +89,7 @@
           </template>
         </v-simple-table>
       </v-container>
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 

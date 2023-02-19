@@ -9,7 +9,7 @@
       <v-card
         v-for="item in itemList"
         :key="item.name_jp"
-        width="200"
+        width="150"
         class="ma-2 d-flex flex-column"
       >
         <v-card-title>{{ item.name_jp }}</v-card-title>
