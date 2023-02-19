@@ -34,7 +34,7 @@ export default {
     const day = ('0' + hiduke.getDate()).slice(-2)
     const url = '/api/Covid19JapanAll?date=' + year + month + day // https://opendata.corona.go.jp/
     console.log(url)
-    
+
     const corona = await context.$axios.$get(
       // "https://jsonplaceholder.typicode.com/posts",
       url,

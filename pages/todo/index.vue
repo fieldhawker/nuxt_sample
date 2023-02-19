@@ -68,7 +68,7 @@
                 <td>
                   <v-btn
                     outlline
-                    round
+                    rounded
                     class="gray"
                     :v-bind:class="{
                       'button--yet': item.state == '作業前',
@@ -80,7 +80,7 @@
                   >
                 </td>
                 <td>
-                  <v-btn outlline round class="blue" @click="remove(item)"
+                  <v-btn outlline rounded class="blue" @click="remove(item)"
                     >削除</v-btn
                   >
                 </td>
