@@ -3,27 +3,28 @@
     <v-form @submit.prevent="sendMessage">
       <v-row>
         <v-col cols="12" sm="4">
-          <v-text-field v-model="name" label="Name*" />
+          <v-text-field v-model="name" label="Name" />
         </v-col>
         <v-col cols="12" sm="8">
-          <v-text-field v-model="text" label="Message*" />
+          <v-text-field v-model="text" label="Message" />
         </v-col>
       </v-row>
-      <v-btn type="submit" color="primary">Send</v-btn>
+      <v-row>
+        <v-col>
+          <v-btn type="submit" color="primary">Send</v-btn>
+        </v-col>
+      </v-row>
     </v-form>
-    <v-card v-for="message in messages" :key="message.id" class="my-5">
-      <v-card-title>{{ message.name }}</v-card-title>
-      <v-card-text>{{ message.text }}</v-card-text>
-      <v-card-actions>
-        <v-btn color="error" @click="deleteMessage(message.id)">Delete</v-btn>
-      </v-card-actions>
-    </v-card>
+    <message-list :messages="displayedMessages" @message-deleted="deleteMessage" />
+    <pagination :currentPage="currentPage" :totalPages="totalPages" @page-changed="changePage" />
   </v-container>
 </template>
 
 <script>
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/database'
+import MessageList from '@/components/MessageList'
+import Pagination from '@/components/PaginationComponent'
 
 const firebaseConfig = {
     apiKey: "AIzaSyCEw-ocIKup6SL9yAWMz7WrwcDQyb17uvE",
@@ -41,37 +42,63 @@ if (!firebase.apps.length) {
 }
 
 export default {
+  components: {
+    MessageList,
+    Pagination
+  },
   data() {
     return {
       name: '',
       text: '',
-      messages: []
+      messages: [],
+      currentPage: 1,
+      totalPages: 0
     }
   },
   async created() {
-    const messagesRef = firebase.database().ref('messages')
-    await messagesRef.on('child_added', snapshot => {
-      const message = snapshot.val()
-      message.id = snapshot.key
-      this.messages.push(message)
-    })
+    await this.loadMessages()
+  },
+  computed: {
+    displayedMessages() {
+      const start = (this.currentPage - 1) * 10
+      const end = start + 10
+      return this.messages.slice(start, end)
+    }
   },
   methods: {
-    sendMessage() {
-      if (this.text !== '' && this.name !== '') {
-        const messagesRef = firebase.database().ref('messages')
-        messagesRef.push({
-          name: this.name,
-          text: this.text
-        })
-        this.name = ''
-        this.text = ''
+    async loadMessages() {
+      const messagesRef = firebase.database().ref('messages')
+      const snapshot = await messagesRef.once('value')
+      const messages = []
+      snapshot.forEach(childSnapshot => {
+        const message = childSnapshot.val()
+        message.id = childSnapshot.key
+        messages.push(message)
+      })
+      this.messages = messages.reverse()
+      this.totalPages = Math.ceil(this.messages.length / 10)
+    },
+    async sendMessage() {
+      const messagesRef = firebase.database().ref('messages')
+      await messagesRef.push({
+        name: this.name,
+        text: this.text
+      })
+      this.name = ''
+      this.text = ''
+      await this.loadMessages()
+    },
+    async deleteMessage(id) {
+      const messagesRef = firebase.database().ref('messages')
+      await messagesRef.child(id).remove()
+      this.messages = this.messages.filter(message => message.id !== id)
+      this.totalPages = Math.ceil(this.messages.length / 10)
+      if (this.currentPage > this.totalPages) {
+        this.currentPage = this.totalPages
       }
     },
-    deleteMessage(id) {
-      const messagesRef = firebase.database().ref('messages')
-      messagesRef.child(id).remove()
-      this.messages = this.messages.filter(message => message.id !== id)
+    changePage(page) {
+      this.currentPage = page
     }
   }
 }
