@@ -132,6 +132,11 @@ export default {
           title: 'Todoアプリ(LocalStorage対応版)',
           to: '/todo2'
         },
+        {
+          icon: 'mdi-chart-bubble',
+          title: '掲示板アプリ(Firebase連携)',
+          to: '/board'
+        },
       ],
       miniVariant: false,
       right: true,
